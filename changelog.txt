@@ -1,0 +1,23 @@
+== Changelog ==
+
+= 2.3.2 (RC1) - 07/05/2015 =
+* Fix - Reduce stock of product when paying with Afterpay.
+* Fix - Better integration with the latest WooCommerce (2.3.8) version.
+* Tweak - Plugin now uses tabs instead of everything on one page.
+* Tweak - Payment methods are now in a WooCommerce table style.
+* Dev - Now includes basic information about the installation.
+* Dev - Wordpress Plugin overview page now includes a direct Settings link to the ICEPAY settings.
+* Dev - Module now only supports WooCommerce > 2.3.
+* Dev - Added German as supported language in the plugin.
+
+= 2.3.1 - 14/04/2015 =
+* Fix - Removed the custom Afterpay tax correction.
+
+= 2.3.0 - 07/04/2015 =
+* Fix - Removed Friesland Bank from iDEAL payment method.
+* Fix - Fixed postback matching issues in the result function.
+* Fix - Translated hardcoded strings.
+* Fix - Fixed some plugin hrefs that leads to permission denied errors.
+* Tweak - Replaced old logo with new one.
+* Tweak - Refactored Dutch and English translations from source files.
+* Dev - Removed backwards compatibility for WooCommerce < 2.3.
