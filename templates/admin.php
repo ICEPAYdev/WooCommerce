@@ -54,7 +54,7 @@
 <div id='tab3'>
     <br class="clear">
 
-    <table class="wc_status_table widefat" cellspacing="0" id="status" style="max-width:25%;">
+    <table class="wc_status_table widefat" cellspacing="0" id="status" style="max-width:45%;">
         <thead>
         <tr>
             <th colspan="3">ICEPAY Payment Module</th>
