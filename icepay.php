@@ -82,18 +82,6 @@ function ICEPAY_Init()
                 if (!get_option('ICEPAY_Installed', false))
                     $this->install();
 
-                // Run upgrade if needed
-                $upgradeRequired = array('2.2.2');
-
-                $currentVersion = get_option('ICEPAY_Version', '1.0.0');
-
-                foreach ($upgradeRequired as $version) {
-                    if (version_compare($currentVersion, $version, '<'))
-                        $this->upgrade($version);
-                }
-
-                update_option('ICEPAY_VERSION', $this->version);
-
                 add_action('woocommerce_update_options_payment_gateways_ICEPAY', array($this, 'process_admin_options'));
 
                 // Ajax callback for getPaymentMethods
@@ -386,23 +374,6 @@ function ICEPAY_Init()
             )");
 
             update_option('ICEPAY_Installed', true);
-        }
-
-        private function upgrade($version) {
-            global $wpdb;
-
-            switch ($version) {
-                case '2.2.2':
-                    // Changing raw_pm_data from TEXT to LONGTEXT, some databases couldn't handle it
-                    $wpdb->query("ALTER TABLE `{$this->getTableWithPrefix('woocommerce_icepay_pmrawdata')}` CHANGE `raw_pm_data` `raw_pm_data` LONGTEXT NULL DEFAULT NULL");
-
-                    // Using the wc-api listener (woocommerce_api) hook since 2.2.2 to be more effectice and maintain WooCommerce standards
-                    ICEPAY_Helper::addUpgradeNotice(__('The postback URL has changed! Please copy the new postback URL and paste it into your ICEPAY account.', 'icepay'));
-                    break;
-                default:
-                    // Do nothing. Nothing at all.
-                    break;
-            }
         }
 
         private function getTableWithPrefix($tableName) {
