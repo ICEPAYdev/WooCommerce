@@ -4,7 +4,7 @@
 
 Make payments in your WordPress WooCommerce webshop possible. Download the Payment Module for WooCommerce [here](https://github.com/icepay/WooCommerce/releases), and you will be able to offer the most frequently used national and international online payment methods.
 
-The master branche may not be stable. See the [release list](https://github.com/icepay/WooCommerce/releases) for stable version of this module.
+The master branche may not be stable. See the [release list](https://github.com/icepay/WooCommerce/releases) for stable version of this module or from the [Wordpress plugin page](https://wordpress.org/plugins/icepay-woocommerce-online-payment-module/).
 
 ## Contributing ##
 
@@ -28,7 +28,7 @@ If you found a repeatable bug, and troubleshooting tips didn't help, then be sur
 * Dev - Now includes basic information about the installation.
 * Dev - Wordpress Plugin overview page now includes a direct Settings link to the ICEPAY settings.
 * Dev - Module now only supports WooCommerce > 2.3.
-* Dev - Added German as supported language in the plugin (not translated yet).
+* Dev - Added German as supported language in the plugin (rough translation).
 
 ### 2.3.1 - 14/04/2015
 * Fix - Removed the custom Afterpay tax correction.
