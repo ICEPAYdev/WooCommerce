@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ICEPAY Payment Module\n"
-"POT-Creation-Date: 2015-05-08 13:07+0100\n"
-"PO-Revision-Date: 2015-05-08 13:07+0100\n"
+"POT-Creation-Date: 2015-05-08 13:18+0100\n"
+"PO-Revision-Date: 2015-05-08 13:18+0100\n"
 "Last-Translator: Ricardo Jacobs <ricardo.jacobs@icepay.com>\n"
 "Language-Team: Ricardo Jacobs <ricardo.jacobs@icepay.com>\n"
 "Language: en_US\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: classes/helper.php:12 classes/helper.php:26 icepay.php:693
+#: classes/helper.php:12 classes/helper.php:26 icepay.php:696
 msgid "Settings"
 msgstr "Settings"
 
@@ -247,7 +247,15 @@ msgstr "Knab"
 msgid "Choose your payment method"
 msgstr "Choose your payment method"
 
-#: icepay.php:661
+#: icepay.php:657
+msgid "Currency is not supported by this payment method"
+msgstr "Currency is not supported by this payment method"
+
+#: icepay.php:659
+msgid "This order ID already exists. Please contact the shop."
+msgstr "This order ID already exists. Please contact the shop."
+
+#: icepay.php:664
 msgid "Payment error:"
 msgstr "Payment error:"
 

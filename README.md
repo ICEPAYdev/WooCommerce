@@ -14,9 +14,13 @@ The master branche may not be stable. See the [release list](https://github.com/
 * Push to the branch (`git push origin my-new-feature`)
 * Create new Pull Request
 
+## Bug report ##
+
+If you found a repeatable bug, and troubleshooting tips didn't help, then be sure to [search existing issues](https://github.com/icepay/WooCommerce/issues) first. Include steps to consistently reproduce the problem, actual vs. expected results, screenshots, and your WP/WC and Payment module version number. Disable all extensions to verify the issue is a core bug.
+
 ## Changelog ##
 
-### 2.3.2 (RC1) - 07/05/2015
+### 2.3.2 - 07/05/2015
 * Fix - Reduce stock of product when paying with Afterpay.
 * Fix - Better integration with the latest WooCommerce (2.3.8) version.
 * Tweak - Plugin now uses tabs instead of everything on one page.
@@ -24,7 +28,7 @@ The master branche may not be stable. See the [release list](https://github.com/
 * Dev - Now includes basic information about the installation.
 * Dev - Wordpress Plugin overview page now includes a direct Settings link to the ICEPAY settings.
 * Dev - Module now only supports WooCommerce > 2.3.
-* Dev - Added German as supported language in the plugin.
+* Dev - Added German as supported language in the plugin (not translated yet).
 
 ### 2.3.1 - 14/04/2015
 * Fix - Removed the custom Afterpay tax correction.
