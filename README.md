@@ -20,6 +20,9 @@ If you found a repeatable bug, and troubleshooting tips didn't help, then be sur
 
 ## Changelog ##
 
+### 2.3.3 - 12/05/2015
+* Fix - Better translation when selecting payment method.
+
 ### 2.3.2 - 07/05/2015
 * Fix - Reduce stock of product when paying with Afterpay.
 * Fix - Better integration with the latest WooCommerce (2.3.8) version.

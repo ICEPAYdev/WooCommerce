@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ICEPAY Payment Module\n"
 "POT-Creation-Date: 2015-05-08 13:18+0100\n"
-"PO-Revision-Date: 2015-05-08 13:18+0100\n"
+"PO-Revision-Date: 2015-05-12 10:42+0100\n"
 "Last-Translator: Ricardo Jacobs <ricardo.jacobs@icepay.com>\n"
 "Language-Team: Ricardo Jacobs <ricardo.jacobs@icepay.com>\n"
 "Language: en_US\n"
@@ -245,7 +245,7 @@ msgstr "Knab"
 
 #: icepay.php:461
 msgid "Choose your payment method"
-msgstr "Choose your payment method"
+msgstr "Make a choice"
 
 #: icepay.php:657
 msgid "Currency is not supported by this payment method"
