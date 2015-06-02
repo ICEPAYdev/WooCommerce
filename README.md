@@ -20,6 +20,11 @@ If you found a repeatable bug, and troubleshooting tips didn't help, then be sur
 
 ## Changelog ##
 
+### 2.3.4 - 02/06/2015
+* Fix - Correct German translation.
+* Fix - Secure HTTP does not throw HTTP 301 statuscode.
+* Fix - Open status on postback now correctly handled.
+
 ### 2.3.3 - 12/05/2015
 * Fix - Better translation when selecting payment method.
 

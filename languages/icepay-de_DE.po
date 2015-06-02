@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ICEPAY Payment Module\n"
 "POT-Creation-Date: 2015-05-11 13:16+0100\n"
-"PO-Revision-Date: 2015-05-12 10:42+0100\n"
+"PO-Revision-Date: 2015-05-20 13:08+0100\n"
 "Last-Translator: Ricardo Jacobs <ricardo.jacobs@icepay.com>\n"
 "Language-Team: Ricardo Jacobs <ricardo.jacobs@icepay.com>\n"
 "Language: de_DE\n"
@@ -25,15 +25,15 @@ msgstr "Einstellungen"
 
 #: classes/helper.php:16
 msgid "Warning: There are no payment methods configured yet."
-msgstr "Hinweis: Es gibt keine Zahlungsmittel noch nicht konfiguriert."
+msgstr "Hinweis: Es sind noch keine Bezahlmethoden konfiguriert."
 
 #: icepay.php:110
 msgid "Loading payment method data..."
-msgstr "Laden Zahlungsart Daten ..."
+msgstr "Laden Bezahlmethodendaten..."
 
 #: icepay.php:111
 msgid "Refresh payment methods"
-msgstr "Aktualisieren Zahlungsarten"
+msgstr "Aktualisieren Bezahlmethoden"
 
 #: icepay.php:178 icepay.php:205
 msgid "Postback URL installed successfully."
@@ -47,13 +47,11 @@ msgstr "Keine aktiven Zahlungsmittel für diesen Händler gefunden."
 msgid ""
 "This plugin requires SOAP to make payments. Please contact your hosting "
 "provider to support SOAP."
-msgstr ""
-"Dieses Plugin benötigt SOAP, Zahlungen zu leisten. Bitte kontaktieren Sie "
-"Ihren Hosting-Anbieter, um SOAP unterstützt."
+msgstr "Dieses Plugin benötigt SOAP um Zahlungen zu tätigen."
 
 #: icepay.php:281 icepay.php:521
 msgid "View the manual"
-msgstr "Klicken um das Handbuch"
+msgstr "Handbuch anzeigen"
 
 #: icepay.php:282 icepay.php:522
 msgid "Visit the ICEPAY website"
@@ -65,7 +63,7 @@ msgstr "Konfiguration"
 
 #: icepay.php:284
 msgid "Payment methods"
-msgstr "Zahlungsmethoden"
+msgstr "Bezahlmethoden"
 
 #: icepay.php:285
 msgid "Information"
@@ -80,16 +78,16 @@ msgid ""
 "Your Merchant ID and Secretcode are available in the ICEPAY Merchant Portal. "
 "See the Manual for more information."
 msgstr ""
-"Ihre Händler-ID und Secretcode finden Sie im Händler-Portal ICEPAY. Finden "
-"Sie im Handbuch für weitere Informationen."
+"Ihre Händler-ID und Secretcode finden Sie im Händler Portal von ICEPAY. Im "
+"Handbuch finden Sie weitere Infomatuionen."
 
 #: icepay.php:288
 msgid ""
 "Are there payments methods missing from this payment table? Enable or "
 "activate them in the ICEPAY Merchant Portal at"
 msgstr ""
-"Gibt es Zahlungsmethoden fehlen aus dieser Zahlung Tisch? Aktivieren oder "
-"aktivieren sie in der ICEPAY Anbieterportal auf"
+"Fehlen in dieser Zahlungsliste Bezahlmethoden? Aktivieren oder schalten Sie "
+"diese frei in dem ICEPAY Händler Portal auf..."
 
 #: icepay.php:289
 msgid "Refresh Payment methods"
@@ -116,8 +114,8 @@ msgid ""
 "Please include this information when you create a support ticket, this way "
 "we can help you better"
 msgstr ""
-"Bitte geben Sie diese Informationen, wenn Sie ein Support-Ticket erstellen, "
-"auf diese Weise können wir Ihnen besser helfen"
+"Bitte fügen Sie diese Information Ihrem Support Ticket bei, sodas wir Ihnen "
+"besser helfen können."
 
 #: icepay.php:344
 msgid "Postback URL"
@@ -145,24 +143,24 @@ msgstr "Secretcode"
 
 #: icepay.php:358
 msgid "Copy the Secret Code from your ICEPAY account."
-msgstr "Kopieren Sie den Geheimcode aus Ihrer ICEPAY Konto."
+msgstr "Kopieren Sie diesen Secretcode aus Ihrem ICEPAY Konto."
 
 #: icepay.php:362
 msgid "Optional configuration"
-msgstr "Optionale Konfigurations"
+msgstr "Optionale Konfiguration"
 
 #: icepay.php:366
 msgid "Description on transaction statement"
-msgstr "Beschreibung der Transaktionsrechnung"
+msgstr "Beschreibung auf Transaktionsauszug"
 
 #: icepay.php:368
 msgid ""
 "Some payment methods allow customized descriptions on the transaction "
 "statement. If left empty the Order ID is used. (Max 100 char.)"
 msgstr ""
-"Einige Zahlungsmethoden erlauben maßgeschneiderte Beschreibungen auf der "
-"Transaktions Aussage. Wenn leer gelassen die Bestell-ID verwendet wird. (Max "
-"100 Zeichen.)"
+"Einige Zahlungsmethoden erlauben maßgeschneiderte Beschreibungen auf dem "
+"Transaktionsauszug. Falls diese leer gelassen wird, wird die Bestell-ID "
+"verwendet."
 
 #: icepay.php:372
 msgid "Custom IP Range for IP Check for Postback"
@@ -173,8 +171,8 @@ msgid ""
 "For example a proxy: 1.222.333.444-100.222.333.444 For multiple ranges use "
 "a , seperator: 2.2.2.2-5.5.5.5,8.8.8.8-9.9.9.9"
 msgstr ""
-"Zum Beispiel ein Proxy: 1.222.333.444-100.222.333.444 Für mehrere Bereiche "
-"verwenden, seperator: 2.2.2.2-5.5.5.5,8.8.8.8-9.9.9.9"
+"Zum Besipiel ein Proxy: 1.222.333.444-100.222.333.444 Für mehrere Bereiche "
+"verwenden Sie ein , als Trennzeichen:  2.2.2.2-5.5.5.5,8.8.8.8-9.9.9.9"
 
 #: icepay.php:385
 msgid "Awaiting Payment"
@@ -187,7 +185,7 @@ msgstr "Aktiv"
 #: icepay.php:442
 msgid "Enable or disable the payment method during the checkout process"
 msgstr ""
-"Aktivieren oder deaktivieren Sie die Zahlungsmethode während der "
+"Aktivieren oder deaktivieren Sie die Bezahlmethoden während der "
 "Kaufabwicklung"
 
 #: icepay.php:446
@@ -196,7 +194,7 @@ msgstr "Anzeigename"
 
 #: icepay.php:449
 msgid "Name that will be displayed during the checkout."
-msgstr "Name, der während der Kauf angezeigt wird."
+msgstr "Name, der während der Bezahlung angezeigt wird."
 
 #: icepay.php:482
 msgid "AMEX"
@@ -248,16 +246,17 @@ msgstr "Knab"
 
 #: icepay.php:497
 msgid "Choose your payment method"
-msgstr "Bitte wählen Sie"
+msgstr "Bitte wählen Sie Ihre Bezahlmethode"
 
 #: icepay.php:709
 msgid "Currency is not supported by this payment method"
-msgstr "Währung nicht mit dieser Zahlungsmethode unterstützt"
+msgstr "Währung wird von dieser Bezahlmethode nicht unterstützt"
 
 #: icepay.php:713
 msgid "This order ID already exists. Please contact the shop."
 msgstr ""
-"Die Bestellung ID ist bereits vorhanden. Bitte kontaktieren Sie das Geschäft."
+"Diese Bestellungs ID ist bereits vorhanden. Bitte kontaktieren Sie das "
+"Geschäft/den Webshop."
 
 #: icepay.php:720
 msgid "Payment error:"

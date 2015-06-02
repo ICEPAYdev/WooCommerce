@@ -11,7 +11,7 @@
  * Description: Integration of ICEPAY for WooCommerce
  * Author: ICEPAY
  * Author URI: http://www.icepay.com
- * Version: 2.3.2
+ * Version: 2.3.4
  * License: http://www.gnu.org/licenses/gpl-3.0.html  GNU GENERAL PUBLIC LICENSE
  */
 
@@ -63,7 +63,7 @@ function ICEPAY_Init()
             $this->enabled = false;
 
             // Add postback URL to configuration form
-            $this->settings['postbackurl'] = str_replace('https:', 'http:', add_query_arg('wc-api', 'icepay_result', home_url('/')));
+            $this->settings['postbackurl'] = add_query_arg('wc-api', 'icepay_result', home_url('/'));
 
             // Payment listener/API hook
             add_action('woocommerce_api_icepay_result', array($this, 'result'));
@@ -145,6 +145,7 @@ function ICEPAY_Init()
                                 $order->add_order_note($data->statusCode);
                                 break;
                             case Icepay_StatusCode::OPEN:
+                                break;
                             case Icepay_StatusCode::AUTHORIZED:
                                 $order->payment_complete();
                                 break;
