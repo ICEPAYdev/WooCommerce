@@ -9,27 +9,24 @@
  *
  * Plugin Name: ICEPAY Payment Module
  * Plugin URI: http://www.icepay.com/webshop-modules/online-payments-for-wordpress-woocommerce
- * Description: Integration of ICEPAY for WooCommerce
+ * Description: ICEPAY Payment Module for WooCommerce
  * Author: ICEPAY
  * Author URI: http://www.icepay.com
- * Version: 2.3.4
+ * Version: 2.3.5
  * License: http://www.gnu.org/licenses/gpl-3.0.html  GNU GENERAL PUBLIC LICENSE
  */
 
 add_action('plugins_loaded', 'ICEPAY_Init');
 
-require(realpath(dirname(__FILE__)) . '/api/icepay_api_webservice.php');
-require(realpath(dirname(__FILE__)) . '/classes/helper.php');
+require(plugin_dir_path( __FILE__ ) . '/api/api/icepay_api_webservice.php');
+require(plugin_dir_path( __FILE__ ) . '/classes/helper.php');
 
 function ICEPAY_Init()
 {
     /**
      * Load the Payment Gateway class if WooCommerce did not load it
      */
-    if (!class_exists('WC_Payment_Gateway'))
-    {
-        return;
-    }
+    if(!class_exists('WC_Payment_Gateway')) return;
 
     /**
      * Class ICEPAY
@@ -104,8 +101,8 @@ function ICEPAY_Init()
             // Add files only on ICEPAY's configuration page
             if (ICEPAY_helper::isIcepayPage($this->id))
             {
-                wp_enqueue_script('icepay', '/wp-content/plugins/icepay-woocommerce-online-payment-module/assets/js/icepay.js', array('jquery'), $this->version);
-                wp_enqueue_style('icepay', '/wp-content/plugins/icepay-woocommerce-online-payment-module/assets/css/icepay.css', array(), $this->version);
+                wp_enqueue_script('icepay', plugin_dir_url( __FILE__ ) . 'assets/js/icepay.js', array('jquery'), $this->version);
+                wp_enqueue_style('icepay', plugin_dir_url( __FILE__ ) . 'assets/css/icepay.css', array(), $this->version);
 
                 wp_localize_script('icepay', 'objectL10n', array(
                     'loading' => __('Loading payment method data...', 'icepay'),
@@ -122,11 +119,6 @@ function ICEPAY_Init()
             {
                 $icepay = Icepay_Project_Helper::getInstance()->postback();
                 $icepay->setMerchantID(intval($this->settings['merchantid']))->setSecretCode($this->settings['secretcode']);
-
-                if (!empty($this->settings['ipcheck']))
-                {
-                    $icepay->addToWhitelist($this->settings['ipcheck']);
-                }
 
                 if ($icepay->validate())
                 {
@@ -369,12 +361,6 @@ function ICEPAY_Init()
                     'type' => 'text',
                     'description' => __('Some payment methods allow customized descriptions on the transaction statement. If left empty the Order ID is used. (Max 100 char.)', 'icepay'),
                     'desc_tip' => true
-                ),
-                'ipcheck' => array(
-                    'title' => __('Custom IP Range for IP Check for Postback', 'icepay'),
-                    'type' => 'text',
-                    'description' => __('For example a proxy: 1.222.333.444-100.222.333.444 For multiple ranges use a , seperator: 2.2.2.2-5.5.5.5,8.8.8.8-9.9.9.9', 'icepay'),
-                    'desc_tip' => true
                 )
             );
         }
@@ -427,7 +413,7 @@ function ICEPAY_Init()
             $paymentMethod = $wpdb->get_row("SELECT * FROM `{$this->getTableWithPrefix('woocommerce_icepay_pminfo')}` WHERE `id` = '{$this->pmCode}'");
 
             $this->id = "ICEPAY_{$paymentMethod->pm_code}";
-            $this->method_title = "ICEPAY {$paymentMethod->pm_name}";
+            $this->method_title = "{$paymentMethod->pm_name}";
             $this->paymentMethodCode = $paymentMethod->pm_code;
 
             add_action("woocommerce_update_options_payment_gateways_{$this->id}", array($this, 'process_admin_options'));
