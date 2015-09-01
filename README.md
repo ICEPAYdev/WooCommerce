@@ -20,32 +20,9 @@ If you found a repeatable bug, and troubleshooting tips didn't help, then be sur
 
 ## Changelog ##
 
-### 2.3.4 - 02/06/2015
-* Fix - Correct German translation.
-* Fix - Secure HTTP does not throw HTTP 301 statuscode.
-* Fix - Open status on postback now correctly handled.
-
-### 2.3.3 - 12/05/2015
-* Fix - Better translation when selecting payment method.
-
-### 2.3.2 - 07/05/2015
-* Fix - Reduce stock of product when paying with Afterpay.
-* Fix - Better integration with the latest WooCommerce (2.3.8) version.
-* Tweak - Plugin now uses tabs instead of everything on one page.
-* Tweak - Payment methods are now in a WooCommerce table style.
-* Dev - Now includes basic information about the installation.
-* Dev - Wordpress Plugin overview page now includes a direct Settings link to the ICEPAY settings.
-* Dev - Module now only supports WooCommerce > 2.3.
-* Dev - Added German as supported language in the plugin (rough translation).
-
-### 2.3.1 - 14/04/2015
-* Fix - Removed the custom Afterpay tax correction.
-
-### 2.3.0 - 07/04/2015
-* Fix - Removed Friesland Bank from iDEAL payment method.
-* Fix - Fixed postback matching issues in the result function.
-* Fix - Translated hardcoded strings.
-* Fix - Fixed some plugin hrefs that leads to permission denied errors.
-* Tweak - Replaced old logo with new one.
-* Tweak - Refactored Dutch and English translations from source files.
-* Dev - Removed backwards compatibility for WooCommerce < 2.3.
+Version | Release date | Changes
+------- | ------------ | -------
+2.3.5   | 01/09/2015   | Injected new API version in Payment module (see [this commit](https://github.com/icepay/WooCommerce/commit/33b85afa5f7104fad94f1a1df1510c3335caa949) for info)<br>Dynamic plugin path for assets. (Thank you Marc)<br>Added new [LICENSE](https://github.com/icepay/WooCommerce/blob/master/LICENSE.md) to API repository.
+2.3.4   | 02/06/2015   | Fully German translation.<br>Secure HTTP does not throw HTTP 301 statuscode.<br>Open status on postback now correctly handled.
+2.3.3   | 12/05/2015   | Better translation when selecting payment method.
+2.3.2   | 07/05/2015   | Reduce stock of product when paying with Afterpay.<br>Better integration with the latest WooCommerce (2.3.8) version.<br>Plugin now uses tabs instead of everything on one page.<br>Payment methods are now in a WooCommerce table style.<br>Now includes basic information about the installation.<br>Wordpress Plugin overview page now includes a direct Settings link to the ICEPAY settings.<br>Module now only supports WooCommerce > 2.3.<br>Added German as supported language in the plugin (rough translation).
