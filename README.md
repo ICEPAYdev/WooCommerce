@@ -22,6 +22,7 @@ If you found a repeatable bug, and troubleshooting tips didn't help, then be sur
 
 Version | Release date | Changes
 ------- | ------------ | -------
+2.3.6   | 09/09/2015   | This emergency release disables SSL intermediate certificate checking to allow merchants on shared hosting providers to continue processing transactions while the hosting providers update their certificate store.
 2.3.5   | 01/09/2015   | Injected new API version in Payment module (see [this commit](https://github.com/icepay/WooCommerce/commit/33b85afa5f7104fad94f1a1df1510c3335caa949) for info)<br>Dynamic plugin path for assets. (Thank you Marc)<br>Added new [LICENSE](https://github.com/icepay/WooCommerce/blob/master/LICENSE.md) to API repository.
 2.3.4   | 02/06/2015   | Fully German translation.<br>Secure HTTP does not throw HTTP 301 statuscode.<br>Open status on postback now correctly handled.
 2.3.3   | 12/05/2015   | Better translation when selecting payment method.
