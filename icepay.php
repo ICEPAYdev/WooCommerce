@@ -12,7 +12,7 @@
  * Description: ICEPAY Payment Module for WooCommerce
  * Author: ICEPAY
  * Author URI: http://www.icepay.com
- * Version: 2.3.5
+ * Version: 2.3.6
  * License: http://www.gnu.org/licenses/gpl-3.0.html  GNU GENERAL PUBLIC LICENSE
  */
 
