@@ -313,8 +313,6 @@ function ICEPAY_Init()
         {
             global $wpdb;
 
-            $methods[] = 'ICEPAY';
-
             $paymentMethodCount = $wpdb->get_var("SELECT count(id) FROM `{$this->getTableWithPrefix('woocommerce_icepay_pminfo')}`");
 
             if ($paymentMethodCount != null)
