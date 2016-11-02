@@ -123,7 +123,7 @@ function ICEPAY_Init()
                 if ($icepay->validate())
                 {
                     $data = $icepay->GetPostback();
-                    $order_id = $data->orderID;
+                    $order_id = ltrim($data->orderID, 'TR');
 
                     $query = "SELECT * FROM `{$this->getTableWithPrefix('woocommerce_icepay_transactions')}` WHERE `id` = %d";
                     $ic_order = $wpdb->get_row($wpdb->prepare($query, $order_id));
@@ -174,7 +174,7 @@ function ICEPAY_Init()
 
                 if ($icepay->validate())
                 {
-                    $order_id = $_GET['OrderID'];
+                    $order_id = ltrim($_GET['OrderID'], 'TR');
 
                     $query = "SELECT * FROM `{$this->getTableWithPrefix('woocommerce_icepay_transactions')}` WHERE `id` = %d";
                     $ic_order = $wpdb->get_row($wpdb->prepare($query, $order_id));
@@ -667,9 +667,9 @@ function ICEPAY_Init()
                 $lastid = $wpdb->insert_id;
 
                 $paymentObj = new Icepay_PaymentObject();
-                $paymentObj->setOrderID($lastid)
+                $paymentObj->setOrderID('TR'.$lastid)
                     ->setDescription($description)
-                    ->setReference($orderID)
+                    ->setReference($order_id)
                     ->setAmount($ic_obj->amount)
                     ->setCurrency($ic_obj->currency)
                     ->setCountry($ic_obj->country)
