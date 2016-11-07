@@ -41,7 +41,7 @@ class ICEPAY_Helper {
     }
     
     public static function getVersion() {
-        return $version = '2.3.6';
+        return $version = '2.3.7';
     }
     
     public static function addUpgradeNotice($message) {
