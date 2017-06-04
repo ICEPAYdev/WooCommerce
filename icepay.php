@@ -16,10 +16,44 @@
  * License: http://www.gnu.org/licenses/gpl-3.0.html  GNU GENERAL PUBLIC LICENSE
  */
 
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
 add_action('plugins_loaded', 'ICEPAY_Init');
 
 require(plugin_dir_path( __FILE__ ) . '/api/api/icepay_api_webservice.php');
 require(plugin_dir_path( __FILE__ ) . '/classes/helper.php');
+
+
+/**
+ * Add the gateway to WC Available Gateways
+ *
+ * @param array $gateways all available WC gateways
+ * @return array $gateways all WC gateways + offline gateway
+ */
+function wc_icepay_add_to_gateways( $gateways ) {
+    $gateways[] = 'ICEPAY'; //'WC_Gateway_ICEPAY';
+    return $gateways;
+}
+add_filter( 'woocommerce_payment_gateways', 'wc_icepay_add_to_gateways' );
+
+
+/**
+ * Adds plugin page links
+ *
+ * @param array $links all plugin links
+ * @return array $links all plugin links
+ */
+function wc_icepay_gateway_plugin_links( $links ) {
+    $plugin_links = array(
+        '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout&section=icepay' ) . '">' . __( 'Settings', 'General' ) . '</a>'
+    );
+    return array_merge( $plugin_links, $links );
+}
+add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'wc_icepay_gateway_plugin_links' );
+
 
 function ICEPAY_Init()
 {
@@ -38,44 +72,33 @@ function ICEPAY_Init()
          */
         public function __construct()
         {
-            // Enables shortcut link to ICEPAY settings on the plugin overview page
-            add_filter('plugin_action_links', 'IC_add_action_plugin', 10, 5);
 
-            // Load ICEPAY translations
-            load_plugin_textdomain('icepay', false, dirname(plugin_basename(__FILE__)) . '/languages/');
+            $this->id               = 'ICEPAY';
+            $this->title            = 'ICEPAY';
+            $this->method_title     = __( 'ICEPAY', 'icepay' );
+            $this->version          = ICEPAY_Helper::getVersion();
 
-            // Set core gateway settings
-            $this->method_title = 'ICEPAY';
-            $this->id = 'ICEPAY';
-            $this->title = 'ICEPAY';
-
-            $this->version = ICEPAY_Helper::getVersion();
-
-            // Create admin configuration form
-            $this->initForm();
-
-            // Initialise gateway settings
+            // Load the settings.
+            $this->init_form_fields();
             $this->init_settings();
 
-            // Core gateway is for configuration use only and should never be enabled
+            //Core gateway is for configuration use only and should never be enabled
             $this->enabled = false;
+
+           // Load ICEPAY translations
+           add_action( 'init', array( $this, 'plugin_localization' ) );
+            //load_plugin_textdomain('icepay', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 
             // Add postback URL to configuration form
             $this->settings['postbackurl'] = add_query_arg('wc-api', 'icepay_result', home_url('/'));
 
-            // Payment listener/API hook
+            //Payment listener/API hook
             add_action('woocommerce_api_icepay_result', array($this, 'result'));
 
-            // Since we use a class wrapper, our class is called  twice. To prevent double execution we do a check if the gateway is already registered.
-            $loaded_gateways = apply_filters('woocommerce_payment_gateways', array());
 
-            if (in_array($this->id, $loaded_gateways))
-            {
-                return;
-            }
-
-            // Add ICEPAY as WooCommerce gateway
+            // Add real payment gateways
             add_filter('woocommerce_payment_gateways', array($this, 'addGateway'));
+
 
             // Check if on admin page
             if (is_admin())
@@ -94,6 +117,19 @@ function ICEPAY_Init()
                 // Add scripts
                 add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
             }
+        }
+
+
+        /**
+         * Initialise Gateway Settings Form Fields.
+         */
+        public function init_form_fields() {
+            $this->form_fields = include( 'classes/settings-icepay.php' );
+        }
+        
+        // Localization
+        public function plugin_localization() {
+            load_plugin_textdomain('icepay', false, dirname(plugin_basename(__FILE__)) . '/languages/');
         }
 
         public function enqueueScripts()
@@ -313,7 +349,7 @@ function ICEPAY_Init()
         {
             global $wpdb;
 
-            $methods[] = 'ICEPAY';
+//            $methods[] = 'ICEPAY';
 
             $paymentMethodCount = $wpdb->get_var("SELECT count(id) FROM `{$this->getTableWithPrefix('woocommerce_icepay_pminfo')}`");
 
@@ -331,39 +367,6 @@ function ICEPAY_Init()
             return $methods;
         }
 
-        private function initForm()
-        {
-            $this->form_fields = array(
-                'postbackurl' => array(
-                    'title' => __('Postback URL', 'icepay'),
-                    'type' => 'text',
-                    'description' => __('Copy and paste this URL to the Success, Error and Postback section of your ICEPAY merchant account page.', 'icepay'),
-                    'desc_tip' => true
-                ),
-                'merchantid' => array(
-                    'title' => __('Merchant ID', 'icepay'),
-                    'type' => 'text',
-                    'description' => __('Copy the Merchant ID from your ICEPAY account.', 'icepay'),
-                    'desc_tip' => true
-                ),
-                'secretcode' => array(
-                    'title' => __('Secretcode', 'icepay'),
-                    'type' => 'text',
-                    'description' => __('Copy the Secret Code from your ICEPAY account.', 'icepay'),
-                    'desc_tip' => true
-                ),
-                'steptwo' => array(
-                    'title' => __('Optional configuration', 'icepay'),
-                    'type' => 'title'
-                ),
-                'descriptiontransaction' => array(
-                    'title' => __('Description on transaction statement', 'icepay'),
-                    'type' => 'text',
-                    'description' => __('Some payment methods allow customized descriptions on the transaction statement. If left empty the Order ID is used. (Max 100 char.)', 'icepay'),
-                    'desc_tip' => true
-                )
-            );
-        }
 
         private function install()
         {
@@ -727,22 +730,7 @@ function ICEPAY_Init()
         }
     }
 
-    function IC_add_action_plugin($actions, $plugin_file)
-    {
-        static $plugin;
 
-        if (!isset($plugin))
-        {
-            $plugin = plugin_basename(__FILE__);
-        }
-
-        if ($plugin == $plugin_file)
-        {
-            $actions = array_merge(array('settings' => '<a href="' . admin_url('admin.php?page=wc-settings&tab=checkout&section=icepay') . '">' . __('Settings', 'General') . '</a>'), $actions);
-        }
-
-        return $actions;
-    }
 
     for ($i = 1; $i < 15; $i++)
     {
