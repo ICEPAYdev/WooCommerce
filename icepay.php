@@ -409,6 +409,9 @@ function ICEPAY_Init()
 
     class ICEPAY_Paymentmethod_Core extends WC_Payment_Gateway
     {
+        protected $paymentMethodCode;
+        protected $issuers;
+
         public function __construct()
         {
             global $wpdb;
@@ -418,6 +421,7 @@ function ICEPAY_Init()
             $this->id = "ICEPAY_{$paymentMethod->pm_code}";
             $this->method_title = "{$paymentMethod->pm_name}";
             $this->paymentMethodCode = $paymentMethod->pm_code;
+            $this->has_fields = true;
 
             add_action("woocommerce_update_options_payment_gateways_{$this->id}", array($this, 'process_admin_options'));
 
@@ -461,42 +465,8 @@ function ICEPAY_Init()
                 $method = Icepay_Api_Webservice::getInstance()->singleMethod()->loadFromArray($paymentMethods);
                 $pMethod = $method->selectPaymentMethodByCode($paymentMethod->pm_code);
 
-                $issuers = $pMethod->getIssuers();
+                $this->issuers = $pMethod->getIssuers();
 
-                $output = sprintf("<input type='hidden' name='paymentMethod' value='%s' />", $paymentMethod->pm_code);
-
-                $image = sprintf("%s/assets/images/%s.png", plugins_url('', __FILE__), strtolower($paymentMethod->pm_code));
-                $output .= "<img src='{$image}' />";
-
-                if (count($issuers) > 1)
-                {
-                    __('AMEX', 'icepay');
-                    __('VISA', 'icepay');
-                    __('MASTER', 'icepay');
-                    __('ABNAMRO', 'icepay');
-                    __('ASNBANK', 'icepay');
-                    __('ING', 'icepay');
-                    __('RABOBANK', 'icepay');
-                    __('SNSBANK', 'icepay');
-                    __('SNSREGIOBANK', 'icepay');
-                    __('TRIODOSBANK', 'icepay');
-                    __('VANLANSCHOT', 'icepay');
-                    __('KNAB', 'icepay');
-
-                    $output .= "<select name='{$paymentMethod->pm_code}_issuer' style='width:164px; padding: 2px; margin-left: 7px;'>";
-                    $output .= "<option selected='selected' disabled='disabled'>";
-                    $output .= __('Choose your payment method', 'icepay');
-                    $output .= "</option>";
-
-                    foreach ($issuers as $issuer)
-                    {
-                        $output .= sprintf("<option value='%s'>%s</option>", $issuer['IssuerKeyword'], __($issuer['IssuerKeyword'], 'icepay'));
-                    }
-
-                    $output .= '</select>';
-                }
-
-                $this->description = $output;
             }
         }
 
@@ -728,6 +698,35 @@ function ICEPAY_Init()
 
             return $wpdb->prefix . $tableName;
         }
+
+        /**
+         * Payment form on checkout page.
+         */
+        public function payment_fields()
+        {
+            $output = sprintf("<p class='form-row icepay-pm-issuers'><input type='hidden' name='paymentMethod' value='%s' />", $this->paymentMethodCode);
+
+            $image = sprintf("%s/assets/images/%s.png", plugins_url('', __FILE__), strtolower($this->paymentMethodCode));
+            $output .= "<img src='{$image}' style='vertical-align: bottom' />";
+
+            if (count($this->issuers) > 1) {
+
+                $output .= "<select name='{$this->paymentMethodCode}_issuer' class='input-text' style='min-width: 164px; padding: 2px; margin-left: 7px; height: 52px;' >";
+                $output .= "<option selected='selected' disabled='disabled'>";
+                $output .= __('Choose your payment method', 'icepay');
+                $output .= "</option>";
+
+                foreach ($this->issuers as $issuer) {
+                    $output .= sprintf("<option value='%s'>%s</option>", $issuer['IssuerKeyword'], __($issuer['IssuerKeyword'], 'icepay'));
+                }
+
+                $output .= '</select></p>';
+            }
+
+            echo $output;
+        }
+
+
     }
 
 
