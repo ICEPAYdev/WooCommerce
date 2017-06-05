@@ -1,4 +1,4 @@
-Copyright (c) 2015, ICEPAY B.V.
+Copyright (c) 2017, ICEPAY B.V.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

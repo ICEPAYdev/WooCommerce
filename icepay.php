@@ -4,15 +4,14 @@
  * ICEPAY Woocommerce payment module
  *
  * @license   see LICENSE.md
- * @source    https://github.com/ICEPAYdev/WooCommerce
- * @copyright Copyright (c) 2016 ICEPAY B.V.
+ * @source    https://github.com/ICEPAY/WooCommerce
+ * @copyright Copyright (c) 2017 ICEPAY B.V.
  *
  * Plugin Name: ICEPAY Payment Module
- * Plugin URI: https://icepay.com/webshop-modules/online-payments-for-wordpress-woocommerce/
  * Description: ICEPAY Payment Module for WooCommerce
  * Author: ICEPAY
  * Author URI: https://icepay.com
- * Version: 2.3.7
+ * Version: 2.3.8
  * License: http://www.gnu.org/licenses/gpl-3.0.html  GNU GENERAL PUBLIC LICENSE
  */
 
@@ -28,13 +27,13 @@ require(plugin_dir_path( __FILE__ ) . '/classes/helper.php');
 
 
 /**
- * Add the gateway to WC Available Gateways
+ * Add ICEPAY to WC Available Gateways
  *
  * @param array $gateways all available WC gateways
  * @return array $gateways all WC gateways + offline gateway
  */
 function wc_icepay_add_to_gateways( $gateways ) {
-    $gateways[] = 'ICEPAY'; //'WC_Gateway_ICEPAY';
+    $gateways[] = 'ICEPAY';
     return $gateways;
 }
 add_filter( 'woocommerce_payment_gateways', 'wc_icepay_add_to_gateways' );
@@ -87,7 +86,6 @@ function ICEPAY_Init()
 
            // Load ICEPAY translations
            add_action( 'init', array( $this, 'plugin_localization' ) );
-            //load_plugin_textdomain('icepay', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 
             // Add postback URL to configuration form
             $this->settings['postbackurl'] = add_query_arg('wc-api', 'icepay_result', home_url('/'));
@@ -348,8 +346,6 @@ function ICEPAY_Init()
         public function addGateway($methods)
         {
             global $wpdb;
-
-//            $methods[] = 'ICEPAY';
 
             $paymentMethodCount = $wpdb->get_var("SELECT count(id) FROM `{$this->getTableWithPrefix('woocommerce_icepay_pminfo')}`");
 
@@ -725,12 +721,9 @@ function ICEPAY_Init()
 
             echo $output;
         }
-
-
     }
 
-
-
+    
     for ($i = 1; $i < 15; $i++)
     {
         require(realpath(dirname(__FILE__)) . "/classes/placeholder/paymentmethod{$i}.php");
