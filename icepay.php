@@ -629,8 +629,7 @@ function ICEPAY_Init()
                     $issuer = 'DEFAULT';
                 }
 
-                $description = !empty($this->iceCoreSettings['descriptiontransaction']) ? $this->iceCoreSettings['descriptiontransaction'] : null;
-
+                $description = !empty($this->iceCoreSettings['descriptiontransaction']) ? $this->iceCoreSettings['descriptiontransaction'] : sprintf("Order %s",  $this->iceCoreSettings['merchantid'], $orderID);
                 // Add transaction to ICEPAY table
                 $wpdb->insert($this->getTableWithPrefix('woocommerce_icepay_transactions'), array('order_id' => $order_id, 'status' => Icepay_StatusCode::OPEN, 'transaction_id' => NULL));
                 $lastid = $wpdb->insert_id;
