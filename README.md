@@ -1,6 +1,6 @@
 ![]( https://icepay.com/app/themes/icepay/dist/images/logos/logo_icepay.svg)
 
-# Payment Module for WooCommerce
+# ICEPAY WooCommerce Online Payment Module
 
 Make payments in your WordPress WooCommerce webshop possible. Download the Payment Module for WooCommerce [here](https://github.com/ICEPAY/WooCommerce/releases), and you will be able to offer the most frequently used national and international online payment methods.
 
