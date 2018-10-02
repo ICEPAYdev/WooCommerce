@@ -6,6 +6,8 @@ Make payments in your WordPress WooCommerce webshop possible. Download the Payme
 
 The master branche may not be stable. See the [release list](https://github.com/ICEPAY/WooCommerce/releases) for stable version of this module or from the [Wordpress plugin page](https://wordpress.org/plugins/icepay-woocommerce-online-payment-module/).
 
+See installation and configuration instruction [here](https://github.com/ICEPAY/WooCommerce/wiki)
+
 ## Contributing ##
 
 * Fork it
