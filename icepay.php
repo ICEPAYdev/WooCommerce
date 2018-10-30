@@ -5,13 +5,13 @@
  *
  * @license   see LICENSE.md
  * @source    https://github.com/ICEPAY/WooCommerce
- * @copyright Copyright (c) 2017 ICEPAY B.V.
+ * @copyright Copyright (c) 2018 ICEPAY B.V.
  *
  * Plugin Name: ICEPAY Payment Module
  * Description: ICEPAY Payment Module for WooCommerce
  * Author: ICEPAY
  * Author URI: https://icepay.com
- * Version: 2.3.8
+ * Version: 2.3.9
  * License: http://www.gnu.org/licenses/gpl-3.0.html  GNU GENERAL PUBLIC LICENSE
  */
 
