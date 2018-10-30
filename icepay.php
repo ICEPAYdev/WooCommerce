@@ -529,7 +529,7 @@ function ICEPAY_Init()
             $order = new WC_Order($order_id);
 
             // Get the order and fetch the order id
-            $orderID = $order->id;
+            $orderID = $order->get_id();
 
             try
             {
@@ -565,7 +565,7 @@ function ICEPAY_Init()
 
                         Icepay_Order::getInstance()
                             ->addProduct(Icepay_Order_Product::create()
-                                ->setProductID($product->id)
+                                ->setProductID($product->get_id())
                                 ->setProductName(htmlentities($product->post->post_title))
                                 ->setDescription(htmlentities($product->post->post_title))
                                 ->setQuantity($item['qty'])
