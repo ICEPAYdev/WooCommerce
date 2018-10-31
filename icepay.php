@@ -760,7 +760,7 @@ function ICEPAY_Init()
     }
 
     
-    for ($i = 1; $i < 15; $i++)
+    for ($i = 1; $i < 20; $i++)
     {
         require(realpath(dirname(__FILE__)) . "/classes/placeholder/paymentmethod{$i}.php");
     }
