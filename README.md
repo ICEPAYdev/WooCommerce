@@ -24,6 +24,7 @@ If you found a repeatable bug, and troubleshooting tips didn't help, then be sur
 
 Version | Release date | Changes
 ------- | ------------ | -------
+2.3.9   | 30/10/2018   | New payment methods; automatic Credit Card issuer filtering by order amount, country, currency
 2.3.8   | 05/06/2017   | ECC-136 BugFix - WCML compatibility issues <br/> ECC-137 Add order ID to payment description
 2.3.7   | 01/11/2016   | ECC-97 Show real order ID in reference field; Add 'TR' prefix to ICEPAY transaction IDs that are used instead of OrderID
 2.3.6   | 09/09/2015   | This emergency release disables SSL intermediate certificate checking to allow merchants on shared hosting providers to continue processing transactions while the hosting providers update their certificate store.

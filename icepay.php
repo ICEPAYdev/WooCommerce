@@ -5,13 +5,13 @@
  *
  * @license   see LICENSE.md
  * @source    https://github.com/ICEPAY/WooCommerce
- * @copyright Copyright (c) 2017 ICEPAY B.V.
+ * @copyright Copyright (c) 2018 ICEPAY B.V.
  *
  * Plugin Name: ICEPAY Payment Module
  * Description: ICEPAY Payment Module for WooCommerce
  * Author: ICEPAY
  * Author URI: https://icepay.com
- * Version: 2.3.8
+ * Version: 2.3.9
  * License: http://www.gnu.org/licenses/gpl-3.0.html  GNU GENERAL PUBLIC LICENSE
  */
 
@@ -407,6 +407,7 @@ function ICEPAY_Init()
     {
         protected $paymentMethodCode;
         protected $issuers;
+        protected $filteredPaymentMethods;
 
         public function __construct()
         {
@@ -452,18 +453,49 @@ function ICEPAY_Init()
             $this->title = $this->get_option('displayname');
             $this->iceCoreSettings = get_option($this->plugin_id . 'ICEPAY_settings', null);
 
-            $paymentMethods = $wpdb->get_var("SELECT raw_pm_data FROM `{$this->getTableWithPrefix('woocommerce_icepay_pmrawdata')}`");
+        }
 
-            if ($paymentMethods != null)
-            {
-                $paymentMethods = unserialize($wpdb->get_var("SELECT raw_pm_data FROM `{$this->getTableWithPrefix('woocommerce_icepay_pmrawdata')}`"));
+        /**
+         * Check If The Gateway Is Available For Use.
+         *
+         * @return bool
+         */
+        public function is_available()
+        {
+            global $wpdb;
+            $allPaymentMethods = $wpdb->get_var("SELECT raw_pm_data FROM `{$this->getTableWithPrefix('woocommerce_icepay_pmrawdata')}`");
 
-                $method = Icepay_Api_Webservice::getInstance()->singleMethod()->loadFromArray($paymentMethods);
-                $pMethod = $method->selectPaymentMethodByCode($paymentMethod->pm_code);
-
-                $this->issuers = $pMethod->getIssuers();
-
+            if ($allPaymentMethods == null) {
+                return false;
             }
+
+            $allPaymentMethods = unserialize($allPaymentMethods);
+            $filter = Icepay_Api_Webservice::getInstance()->filtering();
+            $filter->loadFromArray($allPaymentMethods);
+            $filter->filterByCurrency(get_woocommerce_currency())
+                ->filterByCountry(WC()->customer->get_billing_country())
+                ->filterByAmount((int)$this->get_order_total() * 100);
+
+            $this->filteredPaymentMethods = $filter->getFilteredPaymentmethods();
+
+            if (!$filter->isPaymentMethodAvailable($this->paymentMethodCode)) {
+                return false;
+            }
+
+            return parent::is_available();
+
+        }
+
+        /**
+         * Get gateway icon.
+         *
+         * @return string
+         */
+        public function get_icon() {
+            $icon_src  = sprintf("%s/assets/images/%s.png", plugins_url('', __FILE__), strtolower($this->paymentMethodCode));
+            $icon_html = '<img src="' . $icon_src . '" alt="'. $this->paymentMethodCode. '" style="border-radius:0px"/>';
+            return apply_filters( 'wc_icepay_checkout_icon_html', $icon_html );
+
         }
 
         public function admin_options()
@@ -497,7 +529,7 @@ function ICEPAY_Init()
             $order = new WC_Order($order_id);
 
             // Get the order and fetch the order id
-            $orderID = $order->id;
+            $orderID = $order->get_id();
 
             try
             {
@@ -533,7 +565,7 @@ function ICEPAY_Init()
 
                         Icepay_Order::getInstance()
                             ->addProduct(Icepay_Order_Product::create()
-                                ->setProductID($product->id)
+                                ->setProductID($product->get_id())
                                 ->setProductName(htmlentities($product->post->post_title))
                                 ->setDescription(htmlentities($product->post->post_title))
                                 ->setQuantity($item['qty'])
@@ -699,10 +731,15 @@ function ICEPAY_Init()
          */
         public function payment_fields()
         {
-            $output = sprintf("<p class='form-row icepay-pm-issuers'><input type='hidden' name='paymentMethod' value='%s' />", $this->paymentMethodCode);
 
-            $image = sprintf("%s/assets/images/%s.png", plugins_url('', __FILE__), strtolower($this->paymentMethodCode));
-            $output .= "<img src='{$image}' style='vertical-align: bottom' />";
+            if($this->filteredPaymentMethods) {
+                $method = Icepay_Api_Webservice::getInstance()->singleMethod()->loadFromArray($this->filteredPaymentMethods);
+                $pMethod = $method->selectPaymentMethodByCode($this->paymentMethodCode);
+
+                $this->issuers = $pMethod->getIssuers();
+            }
+
+            $output = sprintf("<p class='form-row icepay-pm-issuers'><input type='hidden' name='paymentMethod' value='%s' />", $this->paymentMethodCode);
 
             if (count($this->issuers) > 1) {
 
@@ -723,7 +760,7 @@ function ICEPAY_Init()
     }
 
     
-    for ($i = 1; $i < 15; $i++)
+    for ($i = 1; $i < 20; $i++)
     {
         require(realpath(dirname(__FILE__)) . "/classes/placeholder/paymentmethod{$i}.php");
     }
