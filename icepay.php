@@ -22,8 +22,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 add_action('plugins_loaded', 'ICEPAY_Init');
 
-require(plugin_dir_path( __FILE__ ) . '/api/src/icepay_api_webservice.php');
-require(plugin_dir_path( __FILE__ ) . '/classes/helper.php');
+require(plugin_dir_path( __FILE__ ) . 'api/src/icepay_api_webservice.php');
+require(plugin_dir_path( __FILE__ ) . 'classes/helper.php');
 
 
 /**
