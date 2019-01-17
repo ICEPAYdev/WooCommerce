@@ -536,19 +536,19 @@ function ICEPAY_Init()
                 $webservice = Icepay_Api_Webservice::getInstance()->paymentService();
                 $webservice->addToExtendedCheckoutList(array('AFTERPAY'))->setMerchantID($this->iceCoreSettings['merchantid'])->setSecretCode($this->iceCoreSettings['secretcode']);
 
-                $paymentMethod = explode('_', $order->payment_method);
+                $paymentMethod = explode('_', $order->get_payment_method());
                 $pmCode = strtoupper($paymentMethod[1]);
 
                 if ($webservice->isExtendedCheckoutRequiredByPaymentMethod($pmCode))
                 {
-                    $consumerID = ($order->user_id == null) ? 'Guest' : $order->user_id;
+                    $consumerID = ($order->get_user_id() == null) ? 'Guest' : $order->get_user_id();
 
                     // Set Consumer Info
                     Icepay_Order::getInstance()
                         ->setConsumer(Icepay_Order_Consumer::create()
                             ->setConsumerID($consumerID)
-                            ->setEmail($order->billing_email)
-                            ->setPhone($order->billing_phone)
+                            ->setEmail($order->get_billing_email())
+                            ->setPhone($order->get_billing_phone())
                         );
 
                     // Add Products
@@ -574,51 +574,51 @@ function ICEPAY_Init()
                             );
                     };
 
-                    $billingAddress = $order->billing_address_1 . " " . $order->billing_address_2;
+                    $billingAddress = $order->get_billing_address_1() . " " . $order->get_billing_address_2();
 
                     // Billing Address
                     Icepay_Order::getInstance()
                         ->setBillingAddress(
                             Icepay_Order_Address::create()
-                                ->setInitials($order->billing_first_name)
-                                ->setLastName($order->billing_last_name)
+                                ->setInitials($order->get_billing_first_name())
+                                ->setLastName($order->get_billing_last_name())
                                 ->setStreet(Icepay_Order_Helper::getStreetFromAddress($billingAddress))
                                 ->setHouseNumber(Icepay_Order_Helper::getHouseNumberFromAddress($billingAddress))
                                 ->setHouseNumberAddition(Icepay_Order_Helper::getHouseNumberAdditionFromAddress($billingAddress))
-                                ->setZipCode($order->billing_postcode)
-                                ->setCity($order->billing_city)
-                                ->setCountry($order->billing_country)
+                                ->setZipCode($order->get_billing_postcode())
+                                ->setCity($order->get_billing_city())
+                                ->setCountry($order->get_billing_country())
                         );
 
-                    $shippingAddress = $order->shipping_address_1 . " " . $order->shipping_address_2;
+                    $shippingAddress = $order->get_shipping_address_1() . " " . $order->get_shipping_address_2();
 
                     // Shipping Address
                     Icepay_Order::getInstance()
                         ->setShippingAddress(
                             Icepay_Order_Address::create()
-                                ->setInitials($order->shipping_first_name)
-                                ->setLastName($order->shipping_last_name)
+                                ->setInitials($order->get_shipping_first_name())
+                                ->setLastName($order->get_shipping_last_name())
                                 ->setStreet(Icepay_Order_Helper::getStreetFromAddress($shippingAddress))
                                 ->setHouseNumber(Icepay_Order_Helper::getHouseNumberFromAddress($shippingAddress))
                                 ->setHouseNumberAddition(Icepay_Order_Helper::getHouseNumberAdditionFromAddress($shippingAddress))
-                                ->setZipCode($order->shipping_postcode)
-                                ->setCity($order->shipping_city)
-                                ->setCountry($order->shipping_country)
+                                ->setZipCode($order->get_shipping_postcode())
+                                ->setCity($order->get_shipping_city())
+                                ->setCountry($order->get_shipping_country())
                         );
 
                     // Shipping
-                    if ($order->order_shipping != '0.00')
+                    if ($order->get_order_shipping() != '0.00')
                     {
-                        $taxRate = (int)(string)($order->order_shipping_tax / $order->order_shipping * 100);
-                        $taxAmount = (int)(string)($order->order_shipping_tax * 100);
-                        $shippingCosts = ((int)(string)($order->order_shipping * 100)) + $taxAmount;
+                        $taxRate = (int)(string)($order->order_shipping_tax / $order->get_order_shipping() * 100);
+                        $taxAmount = (int)(string)($order->get_order_shipping_tax() * 100);
+                        $shippingCosts = ((int)(string)($order->get_order_shipping() * 100)) + $taxAmount;
                         Icepay_Order::getInstance()->setShippingCosts($shippingCosts, $taxRate);
                     }
 
                     // Discount
-                    if ($order->order_discount != '0.00')
+                    if ($order->get_order_discount() != '0.00')
                     {
-                        $orderDiscount = (int)(string)($order->order_discount * 100);
+                        $orderDiscount = (int)(string)($order->get_order_discount() * 100);
                         Icepay_Order::getInstance()->setOrderDiscountAmount($orderDiscount);
                     }
                 }
@@ -627,10 +627,10 @@ function ICEPAY_Init()
                 $ic_obj = new StdClass();
 
                 // Get the grand total of order
-                $ic_obj->amount = (int)(string)($order->order_total * 100);
+                $ic_obj->amount = (int)(string)($order->get_order_total() * 100);
 
                 // Get the billing country
-                $ic_obj->country = $order->billing_country;
+                $ic_obj->country = $order->get_billing_country();
 
                 // Get the used currency for the shop
                 $ic_obj->currency = get_woocommerce_currency();
