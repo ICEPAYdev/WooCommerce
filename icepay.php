@@ -627,7 +627,7 @@ function ICEPAY_Init()
                 $ic_obj = new StdClass();
 
                 // Get the grand total of order
-                $ic_obj->amount = (int)(string)($order->get_order_total() * 100);
+                $ic_obj->amount = (int)(string)($order->get_total() * 100);
 
                 // Get the billing country
                 $ic_obj->country = $order->get_billing_country();
@@ -652,7 +652,7 @@ function ICEPAY_Init()
                 {
                     $issuer = $_POST[$issuerName];
                 }
-                elseif (count($supportedIssuers > 0))
+                elseif (is_array($supportedIssuers) && count($supportedIssuers) > 0)
                 {
                     $issuer = $supportedIssuers[0]['IssuerKeyword'];
                 }
